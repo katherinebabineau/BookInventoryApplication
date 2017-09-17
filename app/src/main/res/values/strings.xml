@@ -2,4 +2,6 @@
     <string name="app_name">BookInventoryApplication</string>
     <string name="all_inventory_price_text">price %1$.2f </string> <!-- %1$.2f == format character for a float number,
     where ".2" sets the number of decimal points to be displayed-->
+    <string name="saleToast">You\'ve made a sale!</string>
+    <string name="stock_unavailable">Stock Unavailable for Sale</string>
 </resources>
