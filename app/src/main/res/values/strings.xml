@@ -4,4 +4,9 @@
     where ".2" sets the number of decimal points to be displayed-->
     <string name="saleToast">You\'ve made a sale!</string>
     <string name="stock_unavailable">Stock Unavailable for Sale</string>
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+    <string name="action_delete_all_entries">Delete All Entries</string>
+    <string name="editor_activity_title_new_book">Add a New Book</string>
+    <string name="empty_view_title_text">There are no books to display yet...</string>
+    <string name="empty_view_subtitle_text">Get started by adding a book!</string>
 </resources>
