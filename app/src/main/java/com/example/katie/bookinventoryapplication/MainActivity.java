@@ -1,14 +1,19 @@
 package com.example.katie.bookinventoryapplication;
 
 import android.app.LoaderManager;
-import android.content.ContentValues;
+import android.content.ContentUris;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.katie.bookinventoryapplication.data.BookContract;
@@ -25,11 +30,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
 
         //Links the FAB to become an intent to the editor activity
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (MainActivity.this, EditorActivity.class);
+                startActivity(intent);
+            }
+                               });
 
         //Finding the listView for the MainActivity-- this will be populated with book data
         ListView bookListView = (ListView) findViewById(R.id.list);
 
         //Set the empty view on the ListView so that it will show when there are no books.
+        View emptyView = findViewById(R.id.empty_view);
+        bookListView.setEmptyView(emptyView);
 
         //Link the Adapter to add data to each list item of book data in the Cursor.
         mCursorAdapter = new BookCursorAdapter(this, null);
@@ -39,22 +54,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //but the editor activity will only show details mode, and won't be editable until another
         //button is clicked.
 
+        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+
+                    Uri currentBookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, id);
+                    intent.setData(currentBookUri);
+
+                    startActivity(intent);
+                }
+        });
+
         getLoaderManager().initLoader(BOOK_LOADER, null, this);
 
     }
 
-
-
-    // Method to test adding dummy data into the database. For debugging purposes
-    private void insertBook(){
-
-        ContentValues values = new ContentValues();
-        values.put(BookContract.BookEntry.COLUMN_BOOK_TITLE, "Beauty");
-        values.put(BookContract.BookEntry.COLUMN_BOOK_PRICE, "1.23");
-        values.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, 2);
-
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -67,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.action_insert_dummy_data:
-               insertBook();
                return true;
             case R.id.action_delete_all_entries:
                 return true;
@@ -78,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String[] projection = {
+                BookContract.BookEntry._ID,
                 BookContract.BookEntry.COLUMN_BOOK_TITLE,
                 BookContract.BookEntry.COLUMN_BOOK_PRICE,
                 BookContract.BookEntry.COLUMN_BOOK_QUANTITY};

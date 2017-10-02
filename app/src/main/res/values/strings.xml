@@ -9,4 +9,14 @@
     <string name="editor_activity_title_new_book">Add a New Book</string>
     <string name="empty_view_title_text">There are no books to display yet...</string>
     <string name="empty_view_subtitle_text">Get started by adding a book!</string>
+    <string name="toast_error_with_image">Error picking your image</string>
+    <string name="delete_dialog_msg">Delete this Book?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="editor_delete_book_failed">Delete Book Failed</string>
+    <string name="editor_delete_book_successful">Book Deleted</string>
+    <string name="unsaved_changes_dialog_msg">unsaved changes</string>
+    <string name="discard">discard</string>
+    <string name="keep_editing">keep editing</string>
+    <string name="Save">Save</string>
 </resources>
