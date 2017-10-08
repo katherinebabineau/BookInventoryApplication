@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BookInventoryApplication</string>
+    <string name="app_name">Book Inventory Application</string>
     <string name="all_inventory_price_text">price %1$.2f </string> <!-- %1$.2f == format character for a float number,
     where ".2" sets the number of decimal points to be displayed-->
     <string name="saleToast">You\'ve made a sale!</string>
@@ -15,8 +15,10 @@
     <string name="cancel">Cancel</string>
     <string name="editor_delete_book_failed">Delete Book Failed</string>
     <string name="editor_delete_book_successful">Book Deleted</string>
-    <string name="unsaved_changes_dialog_msg">unsaved changes</string>
+    <string name="unsaved_changes_dialog_msg">Unsaved Changes</string>
     <string name="discard">discard</string>
     <string name="keep_editing">keep editing</string>
     <string name="Save">Save</string>
+    <string name="edit_book_details">Edit Book Details</string>
+    <string name="Book_Details">Book Details</string>
 </resources>
