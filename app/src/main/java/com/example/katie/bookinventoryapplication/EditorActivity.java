@@ -2,17 +2,17 @@ package com.example.katie.bookinventoryapplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -25,15 +25,14 @@ import android.widget.Toast;
 
 import com.example.katie.bookinventoryapplication.data.BookContract;
 
+
 /**
  * Created by Katie on 9/14/2017.
  */
 
-public class EditorActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    //Book Data Loader
-    private static final int EXISTING_BOOK_LOADER = 1;
+
     private static final int IMAGE_REQUEST_CODE = 1100;
     //Content URI for existing book
     private Uri mCurrentBookUri;
@@ -47,6 +46,8 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText mPageNumberEditText;
     //EditText Field to enter the Price
     private EditText mPriceEditText;
+    //EditTex Field to enter the Supplier Email
+    private EditText mSupplierEmail;
     //EditText Field to enter the Quantity
     private EditText mQuantityEditText;
     //Boolean to keep track of book edits
@@ -77,12 +78,11 @@ public class EditorActivity extends AppCompatActivity implements
 
         //If the intent does not contain book URI- create new book.
         if (mCurrentBookUri == null) {
-            setTitle("Add a Book");
+            setTitle(getString(R.string.add_book));
             invalidateOptionsMenu();
         } else {
-            setTitle("Book Details");
-
-            //getLoaderManager().initLoader(EXISTING_BOOK_LOADER, null, this);
+            setTitle(getString(R.string.edit_book));
+            getLoaderManager().initLoader(1, null, this);
         }
 
         //Find all views
@@ -91,6 +91,7 @@ public class EditorActivity extends AppCompatActivity implements
         mAuthorEditText = (EditText) findViewById(R.id.bookAuthorEditTextEditor);
         mPageNumberEditText = (EditText) findViewById(R.id.bookPagesEditTextEditor);
         mPriceEditText = (EditText) findViewById(R.id.bookPriceEditTextEditor);
+        mSupplierEmail = (EditText) findViewById(R.id.supplierEmaileditor);
         mQuantityEditText = (EditText) findViewById(R.id.quantitySummaryEditor);
 
 
@@ -117,9 +118,11 @@ public class EditorActivity extends AppCompatActivity implements
         mAuthorEditText.setOnTouchListener(mTouchListener);
         mPageNumberEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
+        mSupplierEmail.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -147,6 +150,7 @@ public class EditorActivity extends AppCompatActivity implements
         String authorString = mAuthorEditText.getText().toString().trim();
         String pagesString = mPageNumberEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
+        String supplierString = mSupplierEmail.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
 
 
@@ -167,6 +171,7 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(BookContract.BookEntry.COLUMN_BOOK_AUTHOR, authorString);
         values.put(BookContract.BookEntry.COLUMN_BOOK_PAGES, pagesString);
         values.put(BookContract.BookEntry.COLUMN_BOOK_PRICE, priceString);
+        values.put(BookContract.BookEntry.COLUMN_SUPPLIER_EMAIL, supplierString);
         values.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, quantityString);
 
 
@@ -330,7 +335,10 @@ public class EditorActivity extends AppCompatActivity implements
                 BookContract.BookEntry.COLUMN_BOOK_TITLE,
                 BookContract.BookEntry.COLUMN_BOOK_AUTHOR,
                 BookContract.BookEntry.COLUMN_BOOK_PAGES,
-                BookContract.BookEntry.COLUMN_BOOK_PRICE};
+                BookContract.BookEntry.COLUMN_BOOK_PRICE,
+                BookContract.BookEntry.COLUMN_SUPPLIER_EMAIL,
+                BookContract.BookEntry.COLUMN_BOOK_QUANTITY
+                };
 
         return new CursorLoader(this,
                 mCurrentBookUri,
@@ -339,6 +347,9 @@ public class EditorActivity extends AppCompatActivity implements
                 null,
                 null);
     }
+
+
+
 
 
     @Override
@@ -354,6 +365,7 @@ public class EditorActivity extends AppCompatActivity implements
             int authorColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_AUTHOR);
             int pagesColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PAGES);
             int priceColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PRICE);
+            int supplierColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_SUPPLIER_EMAIL);
             int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
 
             //Extract from column using index
@@ -362,6 +374,7 @@ public class EditorActivity extends AppCompatActivity implements
             String author = cursor.getString(authorColumnIndex);
             Integer pages = cursor.getInt(pagesColumnIndex);
             Float price = cursor.getFloat(priceColumnIndex);
+            String email = cursor.getString(supplierColumnIndex);
             Integer quantity = cursor.getInt(quantityColumnIndex);
 
             //Show data to user
@@ -372,10 +385,12 @@ public class EditorActivity extends AppCompatActivity implements
             mAuthorEditText.setText(author);
             mPageNumberEditText.setText(String.valueOf(pages));
             mPriceEditText.setText(String.valueOf(price));
+            mSupplierEmail.setText(email);
             mQuantityEditText.setText(String.valueOf(quantity));
 
         }
-    }
+   }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -384,6 +399,7 @@ public class EditorActivity extends AppCompatActivity implements
         mAuthorEditText.setText("");
         mPageNumberEditText.setText("");
         mPriceEditText.setText("");
+        mSupplierEmail.setText("");
         mQuantityEditText.setText("");
 
     }

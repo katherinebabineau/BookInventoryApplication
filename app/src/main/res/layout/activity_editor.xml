@@ -30,9 +30,10 @@
         android:id="@+id/linearLayout"
         android:weightSum="1"
         android:layout_below="@+id/headerTextViewDetails"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/quantityHeaderEditor">
+        android:layout_toRightOf="@+id/linearLayout2"
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp">
  <LinearLayout
      android:layout_width="225dp"
      android:layout_height="98dp"
@@ -43,28 +44,25 @@
          android:id="@+id/bookTitleEditTextEditor"
          android:layout_width="207dp"
          android:layout_height="80dp"
-         android:hint="Book Title"/>
+         android:hint="Book Title" />
 
  </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <EditText
-                android:id="@+id/bookPriceEditTextEditor"
-                android:layout_width="221dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.08"
-                android:hint="Price in USD"/>
-
-            <EditText
-                android:id="@+id/bookPagesEditTextEditor"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Pages"/>
+                android:id="@+id/bookAuthorEditTextEditor"
+                android:layout_width="168dp"
+                android:layout_height="72dp"
+                android:layout_above="@+id/quantityHeaderEditor"
+                android:layout_toLeftOf="@+id/quantitySummaryEditor"
+                android:layout_toStartOf="@+id/quantitySummaryEditor"
+                android:layout_weight="0.40"
+                android:hint="Author" />
 
         </LinearLayout>
 
@@ -78,9 +76,11 @@
         android:text="Quantity"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:layout_above="@+id/plusButtonEditor"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp" />
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -90,50 +90,58 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/plusButtonEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/quantitySummaryEditor"
-        android:layout_toEndOf="@+id/quantitySummaryEditor"
-        android:visibility="invisible"/>
-
-    <Button
-        android:id="@+id/minusButtonEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:layout_marginRight="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_alignBaseline="@+id/quantitySummaryEditor"
-        android:layout_alignBottom="@+id/quantitySummaryEditor"
-        android:layout_toLeftOf="@+id/quantitySummaryEditor"
-        android:layout_toStartOf="@+id/quantitySummaryEditor"
-        android:visibility="invisible"/>
-
     <EditText
         android:id="@+id/quantitySummaryEditor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:hint="#"
         android:textSize="19sp"
-        android:layout_alignBaseline="@+id/plusButtonEditor"
-        android:layout_alignBottom="@+id/plusButtonEditor"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/headerTextViewDetails"
+        android:layout_alignEnd="@+id/headerTextViewDetails" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Supplier Email"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/quantitySummaryEditor"
+        android:layout_alignLeft="@+id/bookPriceEditTextEditor"
+        android:layout_alignStart="@+id/bookPriceEditTextEditor" />
 
     <EditText
-        android:id="@+id/bookAuthorEditTextEditor"
-        android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:hint="Author"
-        android:layout_above="@+id/quantityHeaderEditor"
-        android:layout_toStartOf="@+id/quantitySummaryEditor"
-        android:layout_toLeftOf="@+id/quantitySummaryEditor" />
+        android:id="@+id/bookPriceEditTextEditor"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.08"
+        android:hint="Price in USD"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/linearLayout"
+        android:layout_alignStart="@+id/linearLayout" />
+
+    <EditText
+        android:id="@+id/bookPagesEditTextEditor"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint=" # of Pages"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/quantityHeaderEditor"
+        android:layout_alignStart="@+id/quantityHeaderEditor" />
+
+    <EditText
+        android:id="@+id/supplierEmaileditor"
+        android:layout_width="107dp"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:textSize="19sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/quantitySummaryEditor"
+        android:layout_toRightOf="@+id/linearLayout2"
+        android:layout_alignRight="@+id/bookPriceEditTextEditor"
+        android:layout_alignEnd="@+id/bookPriceEditTextEditor" />
 
 </RelativeLayout>

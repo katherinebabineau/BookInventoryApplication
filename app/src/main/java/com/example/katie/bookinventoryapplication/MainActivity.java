@@ -21,13 +21,34 @@ import com.example.katie.bookinventoryapplication.data.BookContract;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int BOOK_LOADER= 0;
-    BookCursorAdapter mCursorAdapter;
+    private BookCursorAdapter mCursorAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Finding the listView for the MainActivity-- this will be populated with book data
+        ListView bookListView = (ListView) findViewById(R.id.list);
+        //Set the empty view on the ListView so that it will show when there are no books.
+        View emptyView = findViewById(R.id.empty_view);
+        bookListView.setEmptyView(emptyView);
+
+        //Link the Adapter to add data to each list item of book data in the Cursor.
+        mCursorAdapter = new BookCursorAdapter(this, null);
+        bookListView.setAdapter(mCursorAdapter);
+        //Setup what happens when a list item is clicked. This should bring you to the details activity
+        //and won't be editable until another editing button is clicked.
+        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Uri bookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, l);
+               // Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+               // intent.setData(bookUri);
+               // startActivity(intent);
+            }
+        });
 
         //Links the FAB to become an intent to the editor activity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -38,33 +59,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
             }
                                });
-
-        //Finding the listView for the MainActivity-- this will be populated with book data
-        ListView bookListView = (ListView) findViewById(R.id.list);
-
-        //Set the empty view on the ListView so that it will show when there are no books.
-        View emptyView = findViewById(R.id.empty_view);
-        bookListView.setEmptyView(emptyView);
-
-        //Link the Adapter to add data to each list item of book data in the Cursor.
-        mCursorAdapter = new BookCursorAdapter(this, null);
-        bookListView.setAdapter(mCursorAdapter);
-
-        //Setup what happens when a list item is clicked. This should bring you to the editor activity
-        //but the editor activity will only show details mode, and won't be editable until another
-        //button is clicked.
-
-        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-
-                    Uri currentBookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, id);
-                    intent.setData(currentBookUri);
-
-                    startActivity(intent);
-                }
-        });
 
         getLoaderManager().initLoader(BOOK_LOADER, null, this);
 
