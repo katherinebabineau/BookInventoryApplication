@@ -24,6 +24,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private TextView mPagesTextView;
     private TextView mPriceTextView;
     private TextView mQuantityTextView;
+    private TextView mSupplierEmailTextView;
     private Button mEmailSupplierButton;
 
     private Uri mCurrentBookUri;

@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Uri bookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, l);
-               // Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-               // intent.setData(bookUri);
-               // startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.setData(bookUri);
+                startActivity(intent);
             }
         });
 
