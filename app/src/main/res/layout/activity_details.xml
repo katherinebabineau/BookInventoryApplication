@@ -85,51 +85,53 @@
         android:id="@+id/supplierEmailtextViewDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/emailButtonDetails"
+        android:layout_alignBottom="@+id/emailButtonDetails"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:paddingRight="100dp"
         android:text="Supplier Email"
         android:textSize="15sp"
-        android:textStyle="bold"
-        android:paddingRight="100dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_alignBaseline="@+id/QuantityHeaderDetails"
-        android:layout_alignBottom="@+id/QuantityHeaderDetails"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/emailButtonDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_marginBottom="12dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/supplierEmailtextViewDetails"
-        android:layout_alignStart="@+id/supplierEmailtextViewDetails" />
-
-    <TextView
-        android:id="@+id/QuantityHeaderDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantity"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="54dp"
-        android:layout_marginStart="54dp"
-        android:layout_above="@+id/quantitySummaryDetails"
-        android:layout_toRightOf="@+id/supplierEmailtextViewDetails"
-        android:layout_toEndOf="@+id/supplierEmailtextViewDetails" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_toEndOf="@+id/addQuantityButtonDetails"
+        android:layout_toRightOf="@+id/addQuantityButtonDetails"
+        android:text="Email" />
 
     <TextView
         android:id="@+id/quantitySummaryDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_alignTop="@+id/decreaseQuantityButtonDetails"
+        android:layout_centerHorizontal="true"
         android:hint="#"
-        android:textSize="19sp"
-        android:layout_above="@+id/emailButtonDetails"
-        android:layout_alignRight="@+id/QuantityHeaderDetails"
-        android:layout_alignEnd="@+id/QuantityHeaderDetails"
-        android:layout_marginRight="13dp"
-        android:layout_marginEnd="13dp" />
+        android:padding="10dp"
+        android:textSize="19sp" />
+
+    <Button
+        android:id="@+id/decreaseQuantityButtonDetails"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp"
+        android:layout_toLeftOf="@+id/quantitySummaryDetails"
+        android:layout_toStartOf="@+id/quantitySummaryDetails"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/addQuantityButtonDetails"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@+id/quantitySummaryDetails"
+        android:layout_toEndOf="@+id/quantitySummaryDetails"
+        android:layout_toRightOf="@+id/quantitySummaryDetails"
+        android:text="+" />
 
 </RelativeLayout>

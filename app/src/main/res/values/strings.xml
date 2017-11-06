@@ -24,4 +24,8 @@
     <string name="add_book">Add Book</string>
     <string name="edit_book">Edit Book</string>
     <string name="title_activity_details">Book Details</string>
+    <string name="toast_no_email">Please add an Email for this Supplier</string>
+    <string name="delete_this">Are you sure you want to delete this book?</string>
+    <string name="toast_error_deleting">There was an error deleting the inventory</string>
+    <string name="toast_delete_single_book">This book was deleted successfully</string>
 </resources>

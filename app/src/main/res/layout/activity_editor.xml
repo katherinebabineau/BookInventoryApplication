@@ -119,7 +119,7 @@
         android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.08"
-        android:hint="Price in USD"
+        android:hint="Price USD 0.00"
         android:layout_below="@+id/linearLayout"
         android:layout_alignLeft="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout" />

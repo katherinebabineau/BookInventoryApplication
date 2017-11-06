@@ -2,6 +2,7 @@ package com.example.katie.bookinventoryapplication;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -10,11 +11,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.katie.bookinventoryapplication.data.BookContract;
 
@@ -22,15 +25,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final int BOOK_LOADER= 0;
     private BookCursorAdapter mCursorAdapter;
+    private static final String TAG = "MyActivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //Finding the listView for the MainActivity-- this will be populated with book data
         ListView bookListView = (ListView) findViewById(R.id.list);
+        Log.i(TAG, "listView: " + bookListView );
         //Set the empty view on the ListView so that it will show when there are no books.
         View emptyView = findViewById(R.id.empty_view);
         bookListView.setEmptyView(emptyView);
@@ -38,18 +42,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Link the Adapter to add data to each list item of book data in the Cursor.
         mCursorAdapter = new BookCursorAdapter(this, null);
         bookListView.setAdapter(mCursorAdapter);
+        Log.i(TAG, "end onCreate" );
         //Setup what happens when a list item is clicked. This should bring you to the details activity
         //and won't be editable until another editing button is clicked.
         bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Uri bookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, l);
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Log.i(TAG, "onItemClick" );
+                Uri currentBookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, id);
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.setData(bookUri);
+                intent.setData(currentBookUri);
+                Log.i(TAG, "detailsActivityShouldStart" );
                 startActivity(intent);
+
             }
         });
 
+        Log.i(TAG, "end onCreate" );
         //Links the FAB to become an intent to the editor activity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener(){
@@ -78,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.action_insert_dummy_data:
                return true;
             case R.id.action_delete_all_entries:
+                deleteAllProduct(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,5 +117,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
       mCursorAdapter.swapCursor(null);
+    }
+
+    private static void deleteAllProduct(Context context) {
+        int numRows = context.getContentResolver().delete(BookContract.BookEntry.CONTENT_URI, null, null);
+        if (numRows > 0) {
+            Toast.makeText(context, context.getString(R.string.toast_delete_single_book).replace("#", String.valueOf(numRows)), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, context.getString(R.string.toast_error_deleting), Toast.LENGTH_SHORT).show();
+        }
     }
 }

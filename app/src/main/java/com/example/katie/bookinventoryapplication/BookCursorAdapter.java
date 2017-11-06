@@ -5,11 +5,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.example.katie.bookinventoryapplication.data.BookContract;
  */
 
 public class BookCursorAdapter extends CursorAdapter {
+    private static final String TAG = "MyActivity";
+
 
     //constructor
     public BookCursorAdapter(Context context, Cursor c){
@@ -37,6 +40,7 @@ public class BookCursorAdapter extends CursorAdapter {
         float price = cursor.getFloat(cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PRICE));
         final int quantity = cursor.getInt(cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY));
         final int bookId = cursor.getInt(cursor.getColumnIndex(BookContract.BookEntry._ID));
+        Log.i(TAG, "bookId: " + bookId );
 
         TextView titleTextView = view.findViewById(R.id.Title);
         TextView priceTextView = view.findViewById(R.id.Price);
