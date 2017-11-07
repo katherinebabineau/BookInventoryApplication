@@ -51,6 +51,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         Intent intent = getIntent();
         mCurrentBookUri = intent.getData();
 
+
         //Connect all views to the Java code
         mTitleTextView = (TextView) findViewById(R.id.bookTitleTextViewDetails);
         mAuthorTextView = (TextView) findViewById(R.id.bookAuthorTextViewDetails);
@@ -103,6 +104,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
         if (cursor == null || cursor.getCount() < 1) {
             return;
         }
@@ -139,17 +141,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             mQuantityTextView.setText(String.valueOf(quantity));
 
         }
-    }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mTitleTextView.setText("");
-        mAuthorTextView.setText("");
-        mPagesTextView.setText("");
-        mPriceTextView.setText("");
-        mQuantityTextView.setText("");
-        mImageView.setImageURI(null);
-        mSupplierEmailTextView.setText("");
     }
 
     @Override
@@ -163,10 +155,31 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 changeInventory(1);
                 break;
             case R.id.emailButtonDetails:
-                emailSupplier();
-                break;
+                String email = mSupplierEmailTextView.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL , new String[] {email});
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                Toast.makeText(this, getString(R.string.toast_no_email), Toast.LENGTH_SHORT).show();
+                       }
         }
     }
+
+
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mTitleTextView.setText("");
+        mAuthorTextView.setText("");
+        mPagesTextView.setText("");
+        mPriceTextView.setText("");
+        mQuantityTextView.setText("");
+        mImageView.setImageURI(null);
+        mSupplierEmailTextView.setText("");
+    }
+
 
     /**
      * Helper method to increment and decrement stock
@@ -184,22 +197,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             ContentValues contentValues = new ContentValues();
             contentValues.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, value);
             getContentResolver().update(mCurrentBookUri, contentValues, null, null);
-        }
-    }
-
-    /**
-     * Helper method to contact supplier via E-Mail
-     * Starts email app if available
-     */
-    private void emailSupplier() {
-        String email = mSupplierEmailTextView.getText().toString();
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_EMAIL, email);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.toast_no_email), Toast.LENGTH_SHORT).show();
         }
     }
 
