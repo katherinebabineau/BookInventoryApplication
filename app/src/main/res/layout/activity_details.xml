@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Book Information"
+        android:text="@string/Book_Details"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:hint="Book Title" />
+                android:hint="@string/book_title" />
 
             <TextView
                 android:id="@+id/bookAuthorTextViewDetails"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:hint="Author" />
+                android:hint="@string/book_author" />
 
         </LinearLayout>
 
@@ -69,14 +69,14 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Price" />
+                android:hint="@string/book_price" />
 
             <TextView
                 android:id="@+id/bookPagesTextViewDetails"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Pages" />
+                android:hint="@string/Book_pages" />
 
         </LinearLayout>
     </LinearLayout>
@@ -92,7 +92,7 @@
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
         android:paddingRight="100dp"
-        android:text="Supplier Email"
+        android:text="@string/supplier_email"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -103,7 +103,7 @@
         android:layout_below="@+id/linearLayout"
         android:layout_toEndOf="@+id/addQuantityButtonDetails"
         android:layout_toRightOf="@+id/addQuantityButtonDetails"
-        android:text="Email" />
+        android:text="@string/email_button" />
 
     <TextView
         android:id="@+id/quantitySummaryDetails"

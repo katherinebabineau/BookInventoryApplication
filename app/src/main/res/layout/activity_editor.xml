@@ -1,158 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView_editor"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/headerTextViewDetails"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="81dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/open_book_large" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book Information"
-        android:id="@+id/headerTextViewDetails"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout"
-        android:weightSum="1"
-        android:layout_below="@+id/headerTextViewDetails"
-        android:layout_toRightOf="@+id/linearLayout2"
-        android:layout_toEndOf="@+id/linearLayout2"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp">
+        <ImageView
+            android:id="@+id/imageView_editor"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/open_book_large" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView_editor"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Tap Book to Insert Image" />
+
+        <TextView
+            android:id="@+id/headerTextViewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="35dp"
+            android:text="Book Information"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+        <EditText
+            android:id="@+id/bookTitleEditTextEditor"
+            android:layout_width="170dp"
+            android:layout_height="62dp"
+            android:layout_below="@id/headerTextViewDetails"
+            android:layout_marginLeft="10dp"
+            android:hint="Book Title" />
+
+        <EditText
+            android:id="@+id/bookAuthorEditTextEditor"
+            android:layout_width="170dp"
+            android:layout_height="62dp"
+            android:layout_below="@id/bookTitleEditTextEditor"
+            android:layout_marginLeft="10dp"
+            android:hint="Author"
+            android:paddingRight="15dp" />
+
+        <EditText
+            android:id="@+id/bookPriceEditTextEditor"
+            android:layout_width="170dp"
+            android:layout_height="62dp"
+            android:layout_below="@id/headerTextViewDetails"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/bookAuthorEditTextEditor"
+            android:hint="Price USD 0.00" />
+
+        <EditText
+            android:id="@+id/bookPagesEditTextEditor"
+            android:layout_width="170dp"
+            android:layout_height="62dp"
+            android:layout_below="@id/bookPriceEditTextEditor"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/bookAuthorEditTextEditor"
+            android:hint=" # of Pages" />
+
         <LinearLayout
-            android:layout_width="225dp"
-            android:layout_height="98dp"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <EditText
-                android:id="@+id/bookTitleEditTextEditor"
-                android:layout_width="203dp"
-                android:layout_height="68dp"
-                android:hint="Book Title"
-                android:layout_weight="0.10" />
-
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_alignEnd="@+id/bookPagesEditTextEditor"
+            android:layout_alignRight="@+id/bookPagesEditTextEditor"
+            android:layout_below="@+id/bookAuthorEditTextEditor"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Supplier Email"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/bookAuthorEditTextEditor"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_above="@+id/quantityHeaderEditor"
-                android:layout_toLeftOf="@+id/quantitySummaryEditor"
-                android:layout_toStartOf="@+id/quantitySummaryEditor"
-                android:hint="Author"
-                android:paddingRight="15dp" />
+                android:id="@+id/supplierEmaileditor"
+                android:layout_width="154dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="35dp"
+                android:textSize="19sp" />
 
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/quantitySummaryEditor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bookPagesEditTextEditor"
+            android:layout_toEndOf="@+id/bookAuthorEditTextEditor"
+            android:layout_toRightOf="@+id/bookAuthorEditTextEditor"
+            android:hint="Quantity in Whole #"
+            android:textSize="19sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/quantityHeaderEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantity"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginRight="48dp"
-        android:layout_marginEnd="48dp"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout2">
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/quantitySummaryEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="#"
-        android:textSize="19sp"
-
-        android:layout_marginBottom="25dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/quantityHeaderEditor"
-        android:layout_alignEnd="@+id/quantityHeaderEditor" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Supplier Email"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_above="@+id/quantitySummaryEditor"
-        android:layout_alignLeft="@+id/bookPriceEditTextEditor"
-        android:layout_alignStart="@+id/bookPriceEditTextEditor" />
-
-    <EditText
-        android:id="@+id/bookPriceEditTextEditor"
-        android:layout_width="221dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.08"
-        android:hint="Price USD 0.00"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignLeft="@+id/linearLayout"
-        android:layout_alignStart="@+id/linearLayout" />
-
-    <EditText
-        android:id="@+id/bookPagesEditTextEditor"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint=" # of Pages"
-        android:layout_below="@+id/linearLayout"
-        android:layout_toRightOf="@+id/bookPriceEditTextEditor"
-        android:layout_toEndOf="@+id/bookPriceEditTextEditor"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp" />
-
-    <EditText
-        android:id="@+id/supplierEmaileditor"
-        android:layout_width="107dp"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:textSize="19sp"
-        android:layout_below="@+id/quantityHeaderEditor"
-        android:layout_toLeftOf="@+id/quantityHeaderEditor"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tap Book to Insert Image"
-        android:layout_above="@+id/headerTextViewDetails"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:id="@+id/textView3" />
-
-</RelativeLayout>
+</ScrollView>

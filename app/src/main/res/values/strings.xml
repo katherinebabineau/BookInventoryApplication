@@ -31,5 +31,12 @@
     <string name="are_you_sure">Are you sure you want to delete all inventory?</string>
     <string name="delete_all">All Inventory Deleted Successfully</string>
     <string name="Pages">Pages</string>
+    <string name="Book_Information">Book Information</string>
+    <string name="book_title">Book Title</string>
+    <string name="book_author">Author</string>
+    <string name="book_price">Price</string>
+    <string name="supplier_email">Supplier Email</string>
+    <string name="email_button">EMAIL</string>
+    <string name="Book_pages">Pages</string>
 
 </resources>

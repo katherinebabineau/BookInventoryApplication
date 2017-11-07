@@ -2,7 +2,6 @@ package com.example.katie.bookinventoryapplication;
 
 import android.app.LoaderManager;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,9 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,9 +25,6 @@ import com.example.katie.bookinventoryapplication.data.BookContract;
  */
 
 public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener{
-    private static final String TAG = "MyActivity";
-
-
 
     //Variables for available views
     private ImageView mImageView;
@@ -51,7 +45,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        Log.i(TAG, "LINE 54" );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         //Get the URI of the book clicked from the MainActivity
@@ -76,7 +69,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         mDecQuantityButton.setOnClickListener(this);
         mEmailSupplierButton.setOnClickListener(this);
 
-        Log.i(TAG, "LINE 79" );
         //Initiate Loader Manager
         getLoaderManager().initLoader(2, null, this);
     }
@@ -84,7 +76,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.i(TAG, "LINE 87" );
         // Inflate the menu options from the res/menu/menu_editor.xml file.
         // This adds menu items to the app bar.
         getMenuInflater().inflate(R.menu.menu_details, menu);
@@ -96,7 +87,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Log.i(TAG, "LINE 111" );
         //We need all columns this time
         String[] projection = {
                 BookContract.BookEntry._ID,
@@ -114,11 +104,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        Log.i(TAG, "LINE 129" );
         if (cursor == null || cursor.getCount() < 1) {
             return;
         }
-        Log.i(TAG, "LINE 133" );
         //If cursor has data move to first and read
         if (cursor.moveToFirst()) {
             //Get index of column in cursor
@@ -158,7 +146,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.i(TAG, "LINE 173" );
         mTitleTextView.setText("");
         mAuthorTextView.setText("");
         mPagesTextView.setText("");
@@ -170,7 +157,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onClick(View view) {
-        Log.i(TAG, "LINE 185" );
         int id = view.getId();
         switch (id) {
             case R.id.decreaseQuantityButtonDetails:
@@ -190,7 +176,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
      * @param value
      */
     private void changeInventory(int value) {
-        Log.i(TAG, "LINE 205" );
         //Get the previous value first
         int prevValue = Integer.valueOf(mQuantityTextView.getText().toString());
 
@@ -209,7 +194,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
      * Starts email app if available
      */
     private void emailSupplier() {
-        Log.i(TAG, "LINE 224" );
         String email = mSupplierEmailTextView.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("*/*");
@@ -226,7 +210,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
      * Helper method to open {@link EditorActivity} when "Edit" icon in action bar is tapped
      */
     private void openEditorActivity() {
-        Log.i(TAG, "LINE 241" );
         Intent intent = new Intent(DetailsActivity.this, EditorActivity.class);
         intent.setData(mCurrentBookUri);
         startActivity(intent);
@@ -234,27 +217,28 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "LINE 97" );
         switch (item.getItemId()) {
             case R.id.action_edit:
                 openEditorActivity();
                 return true;
             case R.id.action_delete:
-                showDeleteConfirmationDialog(this);
+                showDeleteConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public static void showDeleteConfirmationDialog(final Context context) {
-        Log.i(TAG, "LINE 250" );
+    /**
+     * Prompt the user to confirm that they want to delete this book.
+     */
+    private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(R.string.delete_this);
+        // for the positive and negative buttons on the dialog.
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the book.
-                deleteBook(context);
+                deleteBook();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -268,19 +252,35 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         });
 
         // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
+        android.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
+    /**
+     * Perform the deletion of the book in the database.
+     */
+    private void deleteBook() {
+        // Only perform the delete if this is an existing book.
+        if (mCurrentBookUri != null) {
+            // Call the ContentResolver to delete the book at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentBookUri
+            // content URI already identifies the book that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentBookUri, null, null);
 
-    private static void deleteBook(Context context) {
-        Log.i(TAG, "LINE 277" );
-        int numRows = context.getContentResolver().delete(BookContract.BookEntry.CONTENT_URI, null, null);
-        if (numRows > 0) {
-            Toast.makeText(context, context.getString(R.string.toast_delete_single_book).replace("#", String.valueOf(numRows)), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, context.getString(R.string.toast_error_deleting), Toast.LENGTH_SHORT).show();
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, getString(R.string.editor_delete_book_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.editor_delete_book_successful),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
+
+        // Close the activity
+        finish();
     }
 
 }
