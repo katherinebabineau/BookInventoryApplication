@@ -4,12 +4,14 @@ import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -81,17 +83,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()) {
-            case R.id.action_insert_dummy_data:
-               return true;
-            case R.id.action_delete_all_entries:
-                deleteAllProduct(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -119,12 +112,48 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       mCursorAdapter.swapCursor(null);
     }
 
-    private static void deleteAllProduct(Context context) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if (id == R.id.action_delete_all_entries) {
+            showDeleteAllConfirmationDialog(this);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public static void showDeleteAllConfirmationDialog(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.are_you_sure);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete all books.
+                deleteAllBooks(context);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private static void deleteAllBooks(Context context) {
         int numRows = context.getContentResolver().delete(BookContract.BookEntry.CONTENT_URI, null, null);
         if (numRows > 0) {
-            Toast.makeText(context, context.getString(R.string.toast_delete_single_book).replace("#", String.valueOf(numRows)), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.delete_all).replace("#", String.valueOf(numRows)), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, context.getString(R.string.toast_error_deleting), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

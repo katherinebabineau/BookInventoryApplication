@@ -92,19 +92,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "LINE 97" );
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                openEditorActivity();
-                return true;
-            case R.id.action_delete:
-                showDeleteAllConfirmationDialog(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -186,10 +174,10 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         int id = view.getId();
         switch (id) {
             case R.id.decreaseQuantityButtonDetails:
-                changeStock(-1);
+                changeInventory(-1);
                 break;
             case R.id.addQuantityButtonDetails:
-                changeStock(1);
+                changeInventory(1);
                 break;
             case R.id.emailButtonDetails:
                 emailSupplier();
@@ -201,7 +189,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
      * Helper method to increment and decrement stock
      * @param value
      */
-    private void changeStock(int value) {
+    private void changeInventory(int value) {
         Log.i(TAG, "LINE 205" );
         //Get the previous value first
         int prevValue = Integer.valueOf(mQuantityTextView.getText().toString());
@@ -244,9 +232,21 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         startActivity(intent);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(TAG, "LINE 97" );
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                openEditorActivity();
+                return true;
+            case R.id.action_delete:
+                showDeleteConfirmationDialog(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-
-    public static void showDeleteAllConfirmationDialog(final Context context) {
+    public static void showDeleteConfirmationDialog(final Context context) {
         Log.i(TAG, "LINE 250" );
         // Create an AlertDialog.Builder and set the message, and click listeners
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
