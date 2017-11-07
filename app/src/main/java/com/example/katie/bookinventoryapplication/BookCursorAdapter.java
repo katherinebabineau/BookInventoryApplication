@@ -25,7 +25,7 @@ public class BookCursorAdapter extends CursorAdapter {
 
 
     //constructor
-    public BookCursorAdapter(Context context, Cursor c){
+    public BookCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
     }
 
@@ -40,7 +40,7 @@ public class BookCursorAdapter extends CursorAdapter {
         float price = cursor.getFloat(cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PRICE));
         final int quantity = cursor.getInt(cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY));
         final int bookId = cursor.getInt(cursor.getColumnIndex(BookContract.BookEntry._ID));
-        Log.i(TAG, "bookId: " + bookId );
+        Log.i(TAG, "bookId: " + bookId);
 
         TextView titleTextView = view.findViewById(R.id.Title);
         TextView priceTextView = view.findViewById(R.id.Price);
@@ -50,11 +50,11 @@ public class BookCursorAdapter extends CursorAdapter {
         priceTextView.setText(context.getString(R.string.all_inventory_price_text, price));
         quantityTextView.setText(String.valueOf(quantity));
 
-        Button saleButton =  view.findViewById(R.id.saleButton);
-        saleButton.setOnClickListener(new View.OnClickListener(){
+        Button saleButton = view.findViewById(R.id.saleButton);
+        saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (quantity > 0){
+                if (quantity > 0) {
                     int newQuantity = quantity - 1;
                     Uri bookUri = ContentUris.withAppendedId(BookContract.BookEntry.CONTENT_URI, bookId);
 
@@ -62,7 +62,7 @@ public class BookCursorAdapter extends CursorAdapter {
                     values.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, newQuantity);
                     context.getContentResolver().update(bookUri, values, null, null);
                     Toast.makeText(context, context.getString(R.string.saleToast), Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(context, context.getString(R.string.stock_unavailable), Toast.LENGTH_LONG).show();
                 }
             }

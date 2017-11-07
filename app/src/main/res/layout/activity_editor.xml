@@ -26,7 +26,7 @@
             android:layout_below="@id/imageView_editor"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Tap Book to Insert Image" />
+            android:text="@string/tap_to_insert" />
 
         <TextView
             android:id="@+id/headerTextViewDetails"
@@ -36,7 +36,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="35dp"
-            android:text="Book Information"
+            android:text="@string/Book_Information"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
             android:layout_height="62dp"
             android:layout_below="@id/headerTextViewDetails"
             android:layout_marginLeft="10dp"
-            android:hint="Book Title" />
+            android:hint="@string/book_title" />
 
         <EditText
             android:id="@+id/bookAuthorEditTextEditor"
@@ -55,7 +55,7 @@
             android:layout_height="62dp"
             android:layout_below="@id/bookTitleEditTextEditor"
             android:layout_marginLeft="10dp"
-            android:hint="Author"
+            android:hint="@string/book_author"
             android:paddingRight="15dp" />
 
         <EditText
@@ -65,7 +65,7 @@
             android:layout_below="@id/headerTextViewDetails"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/bookAuthorEditTextEditor"
-            android:hint="Price USD 0.00" />
+            android:hint="@string/book_price_decimal" />
 
         <EditText
             android:id="@+id/bookPagesEditTextEditor"
@@ -74,7 +74,7 @@
             android:layout_below="@id/bookPriceEditTextEditor"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/bookAuthorEditTextEditor"
-            android:hint=" # of Pages" />
+            android:hint="@string/number_of_pages" />
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -85,22 +85,14 @@
             android:layout_below="@+id/bookAuthorEditTextEditor"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Supplier Email"
-                android:textSize="15sp"
-                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/supplierEmaileditor"
+                android:id="@+id/supplierEmailTextEditor"
                 android:layout_width="154dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textView"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
+                android:hint="@string/supplier_email"
                 android:inputType="textEmailAddress"
                 android:paddingBottom="35dp"
                 android:textSize="19sp" />
@@ -114,7 +106,7 @@
             android:layout_below="@+id/bookPagesEditTextEditor"
             android:layout_toEndOf="@+id/bookAuthorEditTextEditor"
             android:layout_toRightOf="@+id/bookAuthorEditTextEditor"
-            android:hint="Quantity in Whole #"
+            android:hint="@string/quantity_whole_number"
             android:textSize="19sp" />
 
     </RelativeLayout>

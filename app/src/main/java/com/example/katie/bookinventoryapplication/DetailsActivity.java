@@ -24,7 +24,7 @@ import com.example.katie.bookinventoryapplication.data.BookContract;
  * Created by Katie on 9/21/2017.
  */
 
-public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener{
+public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
     //Variables for available views
     private ImageView mImageView;
@@ -44,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         //Get the URI of the book clicked from the MainActivity
@@ -84,7 +84,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     }
 
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         //We need all columns this time
@@ -119,7 +118,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
 
 
-
             //Get data from column using column index and store them in variables
             String image = cursor.getString(imageColumnIndex);
             String title = cursor.getString(titleColumnIndex);
@@ -128,7 +126,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             Float price = cursor.getFloat(priceColumnIndex);
             String suppEmail = cursor.getString(suppEmailColumnIndex);
             Integer quantity = cursor.getInt(quantityColumnIndex);
-
 
 
             //Present the data to user
@@ -173,6 +170,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     /**
      * Helper method to increment and decrement stock
+     *
      * @param value
      */
     private void changeInventory(int value) {
@@ -257,7 +255,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     /**
-     * Perform the deletion of the book in the database.
+     * Perform the deletion of one book in the database.
      */
     private void deleteBook() {
         // Only perform the delete if this is an existing book.

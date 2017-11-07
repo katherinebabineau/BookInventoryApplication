@@ -47,7 +47,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     //EditText Field to enter the Price
     private EditText mPriceEditText;
     //EditTex Field to enter the Supplier Email
-    private EditText mSupplierEmail;
+    private EditText mSupplierEmailEditText;
     //EditText Field to enter the Quantity
     private EditText mQuantityEditText;
     //Boolean to keep track of book edits
@@ -91,7 +91,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mAuthorEditText = (EditText) findViewById(R.id.bookAuthorEditTextEditor);
         mPageNumberEditText = (EditText) findViewById(R.id.bookPagesEditTextEditor);
         mPriceEditText = (EditText) findViewById(R.id.bookPriceEditTextEditor);
-        mSupplierEmail = (EditText) findViewById(R.id.supplierEmaileditor);
+        mSupplierEmailEditText = (EditText) findViewById(R.id.supplierEmailTextEditor);
         mQuantityEditText = (EditText) findViewById(R.id.quantitySummaryEditor);
 
 
@@ -118,7 +118,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mAuthorEditText.setOnTouchListener(mTouchListener);
         mPageNumberEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
-        mSupplierEmail.setOnTouchListener(mTouchListener);
+        mSupplierEmailEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
 
     }
@@ -150,7 +150,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String authorString = mAuthorEditText.getText().toString().trim();
         String pagesString = mPageNumberEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
-        String supplierString = mSupplierEmail.getText().toString().trim();
+        String supplierString = mSupplierEmailEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
 
 
@@ -158,8 +158,44 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         if (mCurrentBookUri == null &&
                 TextUtils.isEmpty(image) && TextUtils.isEmpty(titleString) && TextUtils.isEmpty(authorString) &&
-                TextUtils.isEmpty(pagesString) && TextUtils.isEmpty(priceString) &&
+                TextUtils.isEmpty(pagesString) && TextUtils.isEmpty(priceString) && TextUtils.isEmpty(supplierString) &&
                 TextUtils.isEmpty(quantityString)) {
+            return;
+        }
+
+        boolean errorFound = false;
+
+        //Check if field is empty when saving, and inform the user to add an input
+        if (TextUtils.isEmpty(image)) {
+            Toast.makeText(this, getString(R.string.toast_add_image), Toast.LENGTH_SHORT).show();
+            errorFound = true;
+        }
+        if (TextUtils.isEmpty(titleString)) {
+            mTitleEditText.setError(getString(R.string.input_required));
+            errorFound = true;
+        }
+        if (TextUtils.isEmpty(authorString)) {
+            mAuthorEditText.setError(getString(R.string.input_required));
+            errorFound = true;
+        }
+        if (TextUtils.isEmpty(pagesString)) {
+            mPageNumberEditText.setError(getString(R.string.input_required));
+            errorFound = true;
+        }
+        if (TextUtils.isEmpty(priceString)) {
+            mPriceEditText.setError(getString(R.string.input_required));
+            errorFound = true;
+        }
+        if (TextUtils.isEmpty(supplierString)) {
+            mSupplierEmailEditText.setError(getString(R.string.input_required));
+            errorFound = true;
+        }
+        if (TextUtils.isEmpty(quantityString)) {
+            mQuantityEditText.setError(getString(R.string.input_required));
+            errorFound = true;
+        }
+        if (errorFound) {
+            Toast.makeText(this, getString(R.string.valid_input), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -181,25 +217,26 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
             //Show a toast, this will depend on if the new book was successfully inserted
             if (newUri == null) {
-                Toast.makeText(this, "Error with saving book",
+                Toast.makeText(this, R.string.error_saving,
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Book Saved",
+                Toast.makeText(this, R.string.book_saved,
                         Toast.LENGTH_SHORT).show();
             }
         } else {
             int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
 
             if (rowsAffected == 0) {
-                Toast.makeText(this, "Error with Updating Book",
+                Toast.makeText(this, R.string.error_updating_book,
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Book Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.book_updated, Toast.LENGTH_SHORT).show();
             }
+
         }
+        // Close the activity
+        finish();
     }
-
-
 
 
     private void showUnsavedChangesDialog(
@@ -276,29 +313,29 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.action_save:
                 //save book to database
                 saveBook();
-                //exit
-                finish();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
                 return true;
             case android.R.id.home:
+                //Show user a warning if the data has changed user pressed back button accidentally or deliberately
                 if (!mBookHasChanged) {
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
                     return true;
                 }
 
-                DialogInterface.OnClickListener discardButtonClickListener =
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                NavUtils.navigateUpFromSameTask(EditorActivity.this);
-                            }
-                        };
+                DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    }
+                };
 
                 showUnsavedChangesDialog(discardButtonClickListener);
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -340,7 +377,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 BookContract.BookEntry.COLUMN_BOOK_PRICE,
                 BookContract.BookEntry.COLUMN_SUPPLIER_EMAIL,
                 BookContract.BookEntry.COLUMN_BOOK_QUANTITY
-                };
+        };
 
         return new CursorLoader(this,
                 mCurrentBookUri,
@@ -349,9 +386,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 null,
                 null);
     }
-
-
-
 
 
     @Override
@@ -387,11 +421,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mAuthorEditText.setText(author);
             mPageNumberEditText.setText(String.valueOf(pages));
             mPriceEditText.setText(String.valueOf(price));
-            mSupplierEmail.setText(email);
+            mSupplierEmailEditText.setText(email);
             mQuantityEditText.setText(String.valueOf(quantity));
 
         }
-   }
+    }
 
 
     @Override
@@ -401,7 +435,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mAuthorEditText.setText("");
         mPageNumberEditText.setText("");
         mPriceEditText.setText("");
-        mSupplierEmail.setText("");
+        mSupplierEmailEditText.setText("");
         mQuantityEditText.setText("");
 
     }
@@ -430,8 +464,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         }
 
-        // Close the activity
-        finish();
+
     }
 
 }

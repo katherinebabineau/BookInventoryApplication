@@ -222,20 +222,20 @@ public class BookProvider extends ContentProvider {
                 throw new IllegalArgumentException("Invalid Page Number Quantity");
             }
         }
-            //if the Price entry is present, check that the value is valid
-            if (values.containsKey(BookContract.BookEntry.COLUMN_BOOK_PRICE)) {
-                Float price = values.getAsFloat(BookContract.BookEntry.COLUMN_BOOK_PRICE);
-                if (price != null && price < 0) {
-                    throw new IllegalArgumentException("Book requires a valid price");
-                }
+        //if the Price entry is present, check that the value is valid
+        if (values.containsKey(BookContract.BookEntry.COLUMN_BOOK_PRICE)) {
+            Float price = values.getAsFloat(BookContract.BookEntry.COLUMN_BOOK_PRICE);
+            if (price != null && price < 0) {
+                throw new IllegalArgumentException("Book requires a valid price");
             }
-            //if the Quantity entry is present, check that the value is valid
-            if (values.containsKey(BookContract.BookEntry.COLUMN_BOOK_QUANTITY)) {
-                Integer quantity = values.getAsInteger(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
-                if (quantity != null && quantity < 0) {
-                    throw new IllegalArgumentException("Invalid Stock Quantity");
-                }
+        }
+        //if the Quantity entry is present, check that the value is valid
+        if (values.containsKey(BookContract.BookEntry.COLUMN_BOOK_QUANTITY)) {
+            Integer quantity = values.getAsInteger(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
+            if (quantity != null && quantity < 0) {
+                throw new IllegalArgumentException("Invalid Stock Quantity");
             }
+        }
 
     }
 }

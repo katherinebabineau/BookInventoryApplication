@@ -10,30 +10,29 @@ import android.provider.BaseColumns;
 
 public final class BookContract {
 
-    //private and empty constructor
-    private BookContract(){}
-
     // The name for the content provider- string used is the content authority for the app.
     public static final String CONTENT_AUTHORITY = "com.example.katie.bookinventoryapplication";
-
     //content authority becomes the base for all URI's
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final String PATH_BOOKS = "books";
 
     //possible path
 
-    public static final String PATH_BOOKS = "books";
+    //private and empty constructor
+    private BookContract() {
+    }
 
     //inner class define constant values for the books database table.
 
-    public  static abstract class BookEntry implements BaseColumns {
+    public static abstract class BookEntry implements BaseColumns {
 
-      // The MIME type of the content uri for a list of books.
+        // The MIME type of the content uri for a list of books.
         public static final String CONTENT_LIST_TYPE =
-              ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
 
         //MIME type for a single book.
         public static final String CONTENT_ITEM_TYPE =
-              ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
 
         //Content URI to access book data in the provider.
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
