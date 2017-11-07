@@ -36,47 +36,47 @@
         android:weightSum="1">
 
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="98dp"
             android:layout_weight="0.45"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/bookTitleTextViewDetails"
-                android:layout_width="match_parent"
+                android:layout_width="226dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:hint="Book Title"/>
+                android:hint="Book Title" />
 
             <TextView
                 android:id="@+id/bookAuthorTextViewDetails"
-                android:layout_width="match_parent"
+                android:layout_width="243dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:hint="Author"/>
+                android:hint="Author" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/bookPriceTextViewDetails"
-                android:layout_width="185dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Price"/>
+                android:hint="Price" />
 
             <TextView
                 android:id="@+id/bookPagesTextViewDetails"
-                android:layout_width="185dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Pages"/>
+                android:hint="Pages" />
 
         </LinearLayout>
     </LinearLayout>

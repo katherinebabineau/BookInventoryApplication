@@ -30,5 +30,6 @@
     <string name="toast_delete_single_book">This book was deleted successfully</string>
     <string name="are_you_sure">Are you sure you want to delete all inventory?</string>
     <string name="delete_all">All Inventory Deleted Successfully</string>
+    <string name="Pages">Pages</string>
 
 </resources>
